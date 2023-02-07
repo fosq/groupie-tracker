@@ -1,0 +1,14 @@
+* {
+    box-sizing: border-box;
+}
+
+body {                
+    padding-top: 2%;
+    color: lightgray;
+    text-align: center;
+    background-color: rgb(37, 35, 35);
+    font-size: 40px;
+    font-family:'Courier New', monospace;
+    align-items: left; 
+    height: 20vh;
+}

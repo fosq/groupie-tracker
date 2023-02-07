@@ -12,7 +12,7 @@ import (
 
 type IO struct {
 	Input  string
-	Output string
+	Output []string
 }
 
 type Endpoints struct {
@@ -22,7 +22,7 @@ type Endpoints struct {
 	Relation  string `json:"relation"`
 }
 
-type Artists []struct {
+type Artists struct {
 	ID           int      `json:"id"`
 	Image        string   `json:"image"`
 	Name         string   `json:"name"`
@@ -84,17 +84,20 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	//fmt.Println(string(responseData))
 
-	var result Artists
+	var result []Artists
 	json.Unmarshal(responseData, &result)
 
-	io.Output = result[0].Name
+	for i := 0; i < len(result); i++ {
+		io.Output = append(io.Output, result[i].Name)
+	}
+	fmt.Println(io.Output)
 
 	whtml, err = template.ParseFiles("templates/artistBubble.html")
 	if err != nil {
 		http.Error(w, "404 - Resource not found", http.StatusNotFound)
 	}
 
-	w.WriteHeader(http.StatusOK)
+	//w.WriteHeader(http.StatusOK)
 	whtml.Execute(w, io)
 }
 

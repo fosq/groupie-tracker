@@ -1,14 +1,24 @@
-* {
-    box-sizing: border-box;
-}
+
 
 body {                
-    padding-top: 2%;
+    padding-top: 14%;
     color: lightgray;
     text-align: center;
     background-color: rgb(37, 35, 35);
     font-size: 40px;
     font-family:'Courier New', monospace;
-    align-items: left; 
-    height: 20vh;
 }
+
+.button {
+    background-color: #04AA6D;
+    border: 5px;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 8px;
+    border-radius:50%;
+    cursor: pointer;
+  }

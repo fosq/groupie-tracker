@@ -1,1 +1,6 @@
-{{.Name}}
+{{ .GroupName }}
+{{ .CreationDate }}
+{{ .FirstAlbum }}
+{{ range .Members }}
+	{{.}}
+{{end}}

@@ -1,7 +1,7 @@
 
 
 body {                
-    padding-top: 14%;
+    padding-top: 8%;
     color: lightgray;
     text-align: center;
     background-color: rgb(37, 35, 35);
@@ -27,19 +27,16 @@ img {
     border-radius: 50%;
 }
 
-.card {
-    position:absolute;
- /* padding-left: 5%; */
-    border: 3px solid green;
-    display: grid;
+.grid-container {
+    display: inline-grid;
     grid-template-columns: auto auto auto;
-    background-color: #2196F3;
-    padding: 10px;
+    grid-template-rows: auto auto;
+    grid-gap: 5px;
 }
 
 .card_footer {
-    text-align:inherit;
     padding: 20px;
     font-size: 30px;
-    text-align: center;
+    display: table-cell;
+    vertical-align:bottom;
 }

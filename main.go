@@ -59,7 +59,6 @@ func main() {
 func formHandler(w http.ResponseWriter, r *http.Request) {
 
 	whtml, err := template.ParseFiles("templates/index.html")
-	whtml.Execute(w, err)
 
 	if err != nil {
 		http.Error(w, "404 - Resource not found", http.StatusNotFound)
@@ -101,12 +100,8 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 	//	http.Error(w, "404 - Resource not found", http.StatusNotFound)
 	//}
 
-	var newcards Cards
-
-	newcards = append(newcards, cards[0])
-	newcards = append(newcards, cards[1])
 	//w.WriteHeader(http.StatusOK)
-	whtml.Execute(w, newcards)
+	whtml.Execute(w, cards)
 }
 
 //    <a href="artist/{{.ID}}">

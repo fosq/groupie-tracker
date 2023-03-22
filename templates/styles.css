@@ -22,3 +22,24 @@ body {
     border-radius:50%;
     cursor: pointer;
   }
+
+img {
+    border-radius: 50%;
+}
+
+.card {
+    position:absolute;
+ /* padding-left: 5%; */
+    border: 3px solid green;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: #2196F3;
+    padding: 10px;
+}
+
+.card_footer {
+    text-align:inherit;
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+}

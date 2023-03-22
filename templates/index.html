@@ -9,5 +9,17 @@
 <body>
   <label>Track your favorite artists</label>
   <hr>
+  {{ range . }}
+  <div class="card_HEAD">
+  <div class="card">
+    <a href="artist/{{.Id}}">
+      <img src={{.Image}}>
+      <div class="card_footer">
+         {{.GroupName}}
+      </div>
+    </a>
+  </div>
+  </div>
+{{end}}
 </body>
 </html>

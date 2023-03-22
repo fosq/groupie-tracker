@@ -20,6 +20,8 @@ type Card struct {
 	Members      []string
 }
 
+type Cards []Card
+
 type MainData struct {
 	Cards        []Card
 	CountMembers []int
@@ -63,11 +65,6 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "404 - Resource not found", http.StatusNotFound)
 	}
 
-	if r.URL.Path != "/" {
-		http.Error(w, "404 - Page not found", http.StatusNotFound)
-		return
-	}
-
 	response, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
 
 	if err != nil {
@@ -82,22 +79,34 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 	//fmt.Println(string(responseData))
 
 	var result []Artist
+	var cards Cards
 	json.Unmarshal(responseData, &result)
 
-	data := Card{
-		Id:           result[0].ID,
-		Image:        result[0].Image,
-		GroupName:    result[0].Name,
-		CreationDate: result[0].CreationDate,
-		FirstAlbum:   result[0].FirstAlbum,
-		Members:      result[0].Members,
+	// Loop through each artist
+	for _, artist := range result {
+		data := Card{
+			Id:           artist.ID,
+			Image:        artist.Image,
+			GroupName:    artist.Name,
+			CreationDate: artist.CreationDate,
+			FirstAlbum:   artist.FirstAlbum,
+			Members:      artist.Members,
+		}
+
+		cards = append(cards, data)
 	}
 
-	whtml, err = template.ParseFiles("templates/artistBubble.html")
-	if err != nil {
-		http.Error(w, "404 - Resource not found", http.StatusNotFound)
-	}
+	//whtml, err = template.ParseFiles("templates/artistBubble.html")
+	//if err != nil {
+	//	http.Error(w, "404 - Resource not found", http.StatusNotFound)
+	//}
 
+	var newcards Cards
+
+	newcards = append(newcards, cards[0])
+	newcards = append(newcards, cards[1])
 	//w.WriteHeader(http.StatusOK)
-	whtml.Execute(w, data)
+	whtml.Execute(w, newcards)
 }
+
+//    <a href="artist/{{.ID}}">

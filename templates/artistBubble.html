@@ -1,6 +1,6 @@
-{{ .GroupName }}
-{{ .CreationDate }}
-{{ .FirstAlbum }}
-{{ range .Members }}
-	{{.}}
-{{end}}
+<div class="card">
+    <img src={{.Image}}>
+    <div class="card_footer">
+        {{.GroupName}}
+    </div>
+</div>

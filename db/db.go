@@ -19,6 +19,8 @@ type Artist struct {
 	Relations    string   `json:"relations"`
 }
 
+type Artists []Artist
+
 type Locations struct {
 	Index []struct {
 		ID        int      `json:"id"`

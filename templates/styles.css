@@ -35,8 +35,29 @@ img {
 }
 
 .card_footer {
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     padding: 20px;
     font-size: 30px;
-    display: table-cell;
-    vertical-align:bottom;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 200px;
+    text-decoration: none;
+    color:rgb(134, 158, 158);
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
 }

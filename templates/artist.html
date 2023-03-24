@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../templates/styles.css">
+  <title>Groupie-tracker</title>
+</head>
+<body>
+  <header>
+    <label>Track your favorite artists</label>
+  </header>
+  <hr>
+  <div class="container-box">
+      <h1 class="title">{{ .GroupName }}</h1>
+      <h3>Created in: {{ .CreationDate }}</h3>
+      <h3>First Album: {{ .FirstAlbum }}</h3>
+      <div class="image"><img src="{{ .Image }}"></div>
+      <div class="boxes">
+      <div class="members">
+        Members:
+        <ul>
+          {{ range .Members }}
+          <li>{{ . }}</li>
+          {{ end }}
+        </ul>
+      </div>
+      <div class="locations">
+        Locations:
+        <ul>
+          {{ range .Locations }}
+          <li> {{ . }} </li>
+          {{ end }}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <hr>
+</body>

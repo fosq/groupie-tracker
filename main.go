@@ -7,47 +7,40 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"regexp"
+	"strconv"
+	"strings"
 	"text/template"
 )
 
-type Card struct {
-	Id           int
-	FirstAlbum   string
-	Location     []string
-	Image        string
-	GroupName    string
-	CreationDate int
-	Members      []string
-}
-
-type Cards []Card
-
-type MainData struct {
-	Cards        []Card
-	CountMembers []int
-	GroupNames   []string
-	CreationDate []int
-	FirstAlbum   []string
-	Members      []string
-	Locations    []string
-}
-
 type Artist struct {
-	ID           int      `json:"id"`
-	Image        string   `json:"image"`
-	Name         string   `json:"name"`
-	Members      []string `json:"members"`
-	CreationDate int      `json:"creationDate"`
-	FirstAlbum   string   `json:"firstAlbum"`
-	Locations    string   `json:"locations"`
-	ConcertDates string   `json:"concertDates"`
-	Relations    string   `json:"relations"`
+	Id              int      `json:"id"`
+	Image           string   `json:"image"`
+	GroupName       string   `json:"name"`
+	Members         []string `json:"members"`
+	CreationDate    int      `json:"creationDate"`
+	FirstAlbum      string   `json:"firstAlbum"`
+	LocationsURL    string   `json:"locations"`
+	ConcertDatesURL string   `json:"concertDates"`
+	RelationsURL    string   `json:"relations"`
+	Relations       map[string][]string
 }
+
+type Relations struct {
+	ID             int                 `json:"id"`
+	DatesLocations map[string][]string `json:"datesLocations"`
+}
+
+var (
+	link   string = "https://groupietrackers.herokuapp.com/api/artists"
+	result []Artist
+)
 
 func main() {
 	http.Handle("/templates/", http.StripPrefix("/templates", http.FileServer(http.Dir("templates"))))
 
 	http.HandleFunc("/", formHandler) // Handles /ascii-art
+	http.HandleFunc("/artist/", showArtistPage)
 
 	fmt.Printf("Starting server at port 8080, access the page with 'localhost:8080' in a browser\n")
 	fmt.Printf("Press 'Ctrl + C' to end the server\n")
@@ -64,7 +57,32 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "404 - Resource not found", http.StatusNotFound)
 	}
 
-	response, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
+	fetchData(link, 0)
+
+	whtml.Execute(w, &result)
+}
+
+// Shows artist page when clicking on artist bubble
+func showArtistPage(w http.ResponseWriter, r *http.Request) {
+	re := regexp.MustCompile(`(^/artist/\d+)$`)
+	if !re.MatchString(r.URL.Path) {
+		http.Error(w, "404 Page not found.", http.StatusNotFound)
+	}
+
+	pageId := strings.TrimPrefix(r.URL.Path, "/artist/")
+	id, err := strconv.Atoi(pageId)
+	fetchData(link, id)
+
+	whtml, err := template.ParseFiles("templates/artist.html")
+	if err != nil {
+		http.Error(w, "404 - Resource not found", http.StatusNotFound)
+	}
+	whtml.Execute(w, result[id-1])
+
+}
+
+func fetchData(link string, id int) {
+	response, err := http.Get(link)
 
 	if err != nil {
 		fmt.Print(err.Error())
@@ -75,33 +93,27 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	//fmt.Println(string(responseData))
 
-	var result []Artist
-	var cards Cards
-	json.Unmarshal(responseData, &result)
-
-	// Loop through each artist
-	for _, artist := range result {
-		data := Card{
-			Id:           artist.ID,
-			Image:        artist.Image,
-			GroupName:    artist.Name,
-			CreationDate: artist.CreationDate,
-			FirstAlbum:   artist.FirstAlbum,
-			Members:      artist.Members,
-		}
-
-		cards = append(cards, data)
+	err = json.Unmarshal(responseData, &result)
+	if err != nil {
+		fmt.Println(err)
 	}
 
-	//whtml, err = template.ParseFiles("templates/artistBubble.html")
-	//if err != nil {
-	//	http.Error(w, "404 - Resource not found", http.StatusNotFound)
-	//}
+	if id != 0 {
+		artist := &result[id-1]
+		var relations Relations
 
-	//w.WriteHeader(http.StatusOK)
-	whtml.Execute(w, cards)
+		response, err := http.Get(artist.RelationsURL)
+		if err != nil {
+			log.Fatal(err)
+		}
+		responseData, err := ioutil.ReadAll(response.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
+		err = json.Unmarshal(responseData, &relations)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
 }
-
-//    <a href="artist/{{.ID}}">

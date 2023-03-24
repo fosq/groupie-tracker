@@ -9,20 +9,6 @@ body {
     font-family:'Courier New', monospace;
 }
 
-.button {
-    background-color: #04AA6D;
-    border: 5px;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 8px;
-    border-radius:50%;
-    cursor: pointer;
-  }
-
 img {
     border-radius: 50%;
 }
@@ -44,6 +30,63 @@ img {
     inline-size: 200px;
     text-decoration: none;
     color:rgb(134, 158, 158);
+}
+
+.container-box {
+    border: 15px black;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+h3 {
+    font-size: small;
+}
+
+.title {
+    font-size:45px;
+    text-decoration-line:underline;
+}
+
+.boxes {
+    display: flex;
+}
+
+.members {
+    text-align:left;
+    padding-left: 5%;
+    width: 300px;
+    border: 15px rgba(0, 0, 0, 0.171);
+    background-color: rgba(0, 0, 0, 0.137);
+    padding: 50px;
+    margin: 20px;
+    border-radius: 30px;
+}
+
+.locations {
+    text-align:left;
+    width: 300px;
+    border: 15px rgba(0, 0, 0, 0.171);
+    background-color: rgba(0, 0, 0, 0.137);
+    padding: 50px;
+    margin: 20px;
+    border-radius: 30px;
+    margin-left: auto;
+}
+
+li {
+    font-size: x-large;
+}
+
+ul {
+    list-style-type: disc;
+    list-style-position:outside;
+}
+
+.container-members {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 a:link {

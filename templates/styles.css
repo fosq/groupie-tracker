@@ -35,7 +35,6 @@ img {
 .container-box {
     border: 15px black;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-
 }
 
 h3 {
@@ -48,7 +47,7 @@ h3 {
 }
 
 .boxes {
-    display: flex;
+    display:inline-flex;
 }
 
 .members {
@@ -73,7 +72,16 @@ h3 {
     margin-left: auto;
 }
 
-li {
+.relations-key {
+    font-size:x-large;
+    text-decoration-line: underline;
+}
+
+.relations-val {
+    font-size: medium;
+}
+
+.member-name {
     font-size: x-large;
 }
 
@@ -104,3 +112,17 @@ a:hover {
 a:active {
     text-decoration: none;
 }
+
+.btn {
+    background-color: rgb(50, 66, 82); /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 12px 16px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+  }
+  
+  /* Darker background on mouse-over */
+  .btn:hover {
+    background-color: RoyalBlue;
+  }

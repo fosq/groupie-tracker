@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="../templates/styles.css">
   <title>Groupie-tracker</title>
 </head>
@@ -10,6 +11,7 @@
   <header>
     <label>Track your favorite artists</label>
   </header>
+  <a href="http://localhost:8080"><button class="btn"><i class="fa fa-home"></i> Home</button></a>
   <hr>
   <div class="container-box">
       <h1 class="title">{{ .GroupName }}</h1>
@@ -21,15 +23,18 @@
         Members:
         <ul>
           {{ range .Members }}
-          <li>{{ . }}</li>
+          <li class="member-name">{{ . }}</li>
           {{ end }}
         </ul>
       </div>
       <div class="locations">
         Locations:
         <ul>
-          {{ range .Locations }}
-          <li> {{ . }} </li>
+          {{ range $key, $val := .Relations }}
+          <li class="relations-key">{{ $key }}:</li>
+          {{ range $val }}
+          <div class="relations-val">{{ . }}</div>
+          {{ end }}
           {{ end }}
         </ul>
       </div>

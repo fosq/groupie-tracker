@@ -115,5 +115,17 @@ func fetchData(link string, id int) {
 		if err != nil {
 			fmt.Println(err)
 		}
+
+		dateLocMap := make(map[string][]string)
+		for key, val := range relations.DatesLocations {
+			newKey := key
+			newKey = strings.Replace(newKey, "-", ", ", -1)
+			newKey = strings.Replace(newKey, "_", " ", -1)
+			newKey = strings.Title(strings.ToLower(newKey))
+			newKey = strings.Replace(newKey, "Usa", "USA", -1)
+			newKey = strings.Replace(newKey, "Uk", "UK", -1)
+			dateLocMap[newKey] = val
+		}
+		artist.Relations = dateLocMap
 	}
 }

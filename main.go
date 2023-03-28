@@ -51,6 +51,10 @@ func main() {
 
 func formHandler(w http.ResponseWriter, r *http.Request) {
 
+	if r.URL.Path != "/" {
+		http.Error(w, "404 Page Not Found.", http.StatusNotFound)
+		return
+	}
 	whtml, err := template.ParseFiles("templates/index.html")
 
 	if err != nil {

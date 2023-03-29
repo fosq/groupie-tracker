@@ -68,13 +68,20 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 
 // Shows artist page when clicking on artist bubble
 func showArtistPage(w http.ResponseWriter, r *http.Request) {
-	re := regexp.MustCompile(`(^/artist/\d+)$`)
+	re := regexp.MustCompile(`^(/artist/\d+)$`)
 	if !re.MatchString(r.URL.Path) {
 		http.Error(w, "404 Page not found.", http.StatusNotFound)
+		return
 	}
 
 	pageId := strings.TrimPrefix(r.URL.Path, "/artist/")
 	id, err := strconv.Atoi(pageId)
+
+	if id > len(result) {
+		http.Error(w, "404 Page not found", http.StatusNotFound)
+		return
+	}
+
 	fetchData(link, id)
 
 	whtml, err := template.ParseFiles("templates/artist.html")

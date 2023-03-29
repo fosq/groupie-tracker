@@ -55,15 +55,22 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "404 Page Not Found.", http.StatusNotFound)
 		return
 	}
-	whtml, err := template.ParseFiles("templates/index.html")
+
+	whtml, err := template.ParseFiles("templates/indexSS.html")
 
 	if err != nil {
 		http.Error(w, "404 - Resource not found", http.StatusNotFound)
+		return
 	}
 
 	fetchData(link, 0)
 
-	whtml.Execute(w, &result)
+	err = whtml.Execute(w, &result)
+
+	if err != nil {
+		http.Error(w, "404 - Resource not found", http.StatusNotFound)
+		return
+	}
 }
 
 // Shows artist page when clicking on artist bubble
@@ -88,7 +95,12 @@ func showArtistPage(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, "404 - Resource not found", http.StatusNotFound)
 	}
-	whtml.Execute(w, result[id-1])
+	err = whtml.Execute(w, result[id-1])
+
+	if err != nil {
+		http.Error(w, "404 - Resource not found", http.StatusNotFound)
+		return
+	}
 
 }
 
